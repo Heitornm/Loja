@@ -3,41 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelo de Loja Online</title>
+    <title>Sua Loja de Perfumes Online</title>
     <!-- Inclui a biblioteca do Tailwind CSS para estilização rápida e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
+        /* Paleta de Cores Inspirada em Flor de Cerejeira */
+        .color-palette {
+            --light-pink: #fce7f3;
+            --soft-pink: #fbcfe8;
+            --mid-pink: #f472b6;
+            --dark-pink: #db2777;
+            --off-white: #fdf2f8;
+            --light-purple: #c084fc;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7fafc;
+            /* Gradiente de fundo suave para o tema de cerejeira */
+            background-image: linear-gradient(135deg, var(--light-pink) 0%, var(--off-white) 100%);
+            background-color: var(--light-pink);
+            color: #4a5568;
         }
+
         /* Estilo para o modal de login */
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.75);
         }
+
+        .hero-section {
+            background-image: linear-gradient(to right, var(--mid-pink), var(--light-purple));
+        }
+
+        .product-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: var(--dark-pink);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #be185d;
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="color-palette">
 
     <!-- Cabeçalho da Loja -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
             <!-- Logo da Loja -->
-            <a href="#" class="text-2xl font-bold text-gray-900">Sua Loja</a>
+            <a href="#" class="text-3xl font-bold text-gray-900 font-serif tracking-wide">Flor de Sândalo</a>
             <!-- Navegação Principal -->
             <nav class="hidden md:flex space-x-8">
-                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Início</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Produtos</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Sobre Nós</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Contato</a>
+                <a href="#" class="text-gray-600 hover:text-dark-pink transition-colors">Início</a>
+                <a href="#" class="text-gray-600 hover:text-dark-pink transition-colors">Perfumes</a>
+                <a href="#" class="text-gray-600 hover:text-dark-pink transition-colors">Decants</a>
+                <a href="#" class="text-gray-600 hover:text-dark-pink transition-colors">Contato</a>
             </nav>
             <!-- Botões de Ação do Usuário -->
             <div class="flex items-center space-x-4">
-                <button id="auth-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <button id="auth-button" class="bg-mid-pink text-white px-4 py-2 rounded-full hover:bg-dark-pink transition-colors">
                     Entrar
                 </button>
-                <button id="cart-button" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                <button id="cart-button" class="bg-gray-400 text-white px-4 py-2 rounded-full hover:bg-gray-500 transition-colors">
                     Carrinho (0)
                 </button>
             </div>
@@ -47,7 +84,7 @@
     <!-- Modal de Login/Cadastro (inicialmente oculto) -->
     <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-overlay">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm mx-4 p-8">
-            <h2 class="text-2xl font-bold text-center mb-6">Acesse sua Conta</h2>
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Acesse sua Conta</h2>
 
             <!-- Opção de login com Google -->
             <button id="google-login-btn" class="w-full flex items-center justify-center gap-2 bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors mb-4">
@@ -63,9 +100,9 @@
 
             <!-- Formulário de e-mail e senha -->
             <form id="auth-form" class="space-y-4">
-                <input type="email" id="email-input" placeholder="E-mail" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                <input type="password" id="password-input" placeholder="Senha" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                <button type="submit" class="w-full bg-gray-800 text-white font-semibold py-3 rounded-lg hover:bg-gray-900 transition-colors">
+                <input type="email" id="email-input" placeholder="E-mail" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mid-pink" required>
+                <input type="password" id="password-input" placeholder="Senha" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mid-pink" required>
+                <button type="submit" class="w-full bg-dark-pink text-white font-semibold py-3 rounded-lg hover:bg-mid-pink transition-colors">
                     Entrar
                 </button>
             </form>
@@ -73,7 +110,7 @@
             <div class="mt-4 text-center">
                 <p class="text-sm text-gray-600">
                     Não tem uma conta?
-                    <button id="toggle-form-btn" class="text-blue-600 font-semibold hover:underline">
+                    <button id="toggle-form-btn" class="text-dark-pink font-semibold hover:underline">
                         Crie uma aqui
                     </button>
                 </p>
@@ -88,48 +125,72 @@
     </div>
 
     <!-- Seção de Destaque (Hero) -->
-    <section class="bg-blue-600 text-white py-20 px-4 text-center">
+    <section class="hero-section text-white py-20 px-4 text-center">
         <div class="container mx-auto">
             <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">
-                Encontre o que você precisa.
+                O Perfume da sua Essência.
             </h1>
             <p class="text-lg sm:text-xl font-light mb-8 max-w-2xl mx-auto">
-                Qualidade, preço justo e entrega rápida. Compre agora e receba no conforto da sua casa.
+                Descubra fragrâncias árabes e importadas que contam uma história, com a opção de comprar decants para experimentar.
             </p>
-            <a href="#" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
-                Comprar Agora
+            <a href="#" class="bg-white text-mid-pink font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
+                Explorar Coleção
             </a>
         </div>
     </section>
 
     <!-- Seção de Produtos em Destaque -->
     <section class="container mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-center mb-10">Produtos em Destaque</h2>
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">Fragrâncias em Destaque</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card do Produto 1 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+1" alt="Produto 1" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 1</h3>
-                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 199,90</p>
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+            <!-- Card do Perfume 1 - Masculino -->
+            <div class="bg-white rounded-xl product-card overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/e0e0e0/555555?text=Perfume+Masculino" alt="Perfume Masculino" class="w-full h-48 object-cover mb-4 rounded-lg">
+                <h3 class="text-lg font-semibold text-gray-900">OUD Noir</h3>
+                <p class="text-gray-600 mb-2">Fragrância Árabe Amadeirada</p>
+                <!-- Opções de tamanho/preço -->
+                <div class="flex flex-col items-center gap-2 mb-4">
+                    <select class="w-2/3 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mid-pink">
+                        <option value="150" selected>Frasco (R$ 150,00)</option>
+                        <option value="50">Decant 10ml (R$ 50,00)</option>
+                        <option value="30">Decant 5ml (R$ 30,00)</option>
+                    </select>
+                </div>
+                <button class="w-full btn-primary font-semibold py-2 rounded-full">
                     Adicionar ao Carrinho
                 </button>
             </div>
-            <!-- Card do Produto 2 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+2" alt="Produto 2" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 2</h3>
-                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 99,90</p>
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+            <!-- Card do Perfume 2 - Feminino -->
+            <div class="bg-white rounded-xl product-card overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/e0e0e0/555555?text=Perfume+Feminino" alt="Perfume Feminino" class="w-full h-48 object-cover mb-4 rounded-lg">
+                <h3 class="text-lg font-semibold text-gray-900">Flor de Jasmim</h3>
+                <p class="text-gray-600 mb-2">Fragrância Floral Importada</p>
+                <!-- Opções de tamanho/preço -->
+                <div class="flex flex-col items-center gap-2 mb-4">
+                    <select class="w-2/3 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mid-pink">
+                        <option value="180" selected>Frasco (R$ 180,00)</option>
+                        <option value="60">Decant 10ml (R$ 60,00)</option>
+                        <option value="40">Decant 5ml (R$ 40,00)</option>
+                    </select>
+                </div>
+                <button class="w-full btn-primary font-semibold py-2 rounded-full">
                     Adicionar ao Carrinho
                 </button>
             </div>
-            <!-- Card do Produto 3 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+3" alt="Produto 3" class="w-full h-48 object-cover mb-4 rounded-md">
-                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 3</h3>
-                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 249,90</p>
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+            <!-- Card do Perfume 3 - Unissex -->
+            <div class="bg-white rounded-xl product-card overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/e0e0e0/555555?text=Perfume+Unissex" alt="Perfume Unissex" class="w-full h-48 object-cover mb-4 rounded-lg">
+                <h3 class="text-lg font-semibold text-gray-900">Âmbar Real</h3>
+                <p class="text-gray-600 mb-2">Fragrância Cítrica Especiada</p>
+                <!-- Opções de tamanho/preço -->
+                <div class="flex flex-col items-center gap-2 mb-4">
+                    <select class="w-2/3 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mid-pink">
+                        <option value="165" selected>Frasco (R$ 165,00)</option>
+                        <option value="55">Decant 10ml (R$ 55,00)</option>
+                        <option value="35">Decant 5ml (R$ 35,00)</option>
+                    </select>
+                </div>
+                <button class="w-full btn-primary font-semibold py-2 rounded-full">
                     Adicionar ao Carrinho
                 </button>
             </div>
@@ -137,11 +198,11 @@
     </section>
 
     <!-- Seção "Sobre Nós" -->
-    <section class="bg-gray-200 py-16 px-4">
+    <section class="bg-white/50 py-16 px-4">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Nossa História</h2>
+            <h2 class="text-3xl font-bold mb-4 text-gray-800">Nossa Paixão por Perfumes</h2>
             <p class="max-w-3xl mx-auto text-gray-700">
-                Somos apaixonados por [Nicho de Mercado]. Nossa missão é oferecer produtos de alta qualidade, feitos com carinho e atenção aos detalhes. Acreditamos que a satisfação do cliente é o nosso maior sucesso.
+                Na Flor de Sândalo, acreditamos que um perfume é mais do que uma fragrância; é uma expressão de identidade. Nossa curadoria cuidadosa de perfumes árabes e importados visa trazer ao seu dia a dia uma experiência única e memorável.
             </p>
         </div>
     </section>
@@ -149,7 +210,7 @@
     <!-- Rodapé -->
     <footer class="bg-gray-800 text-gray-300 py-10 px-4">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Sua Loja. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Flor de Sândalo. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -159,7 +220,7 @@
         import { getAuth, signInWithCustomToken, signInWithRedirect, getRedirectResult, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variables for Firebase configuration and user authentication.
+        // Variáveis globais para configuração do Firebase e autenticação
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
@@ -180,35 +241,32 @@
         let userId;
 
         // --- Funções de UI ---
-        // Exibe o modal
+        // Exibe o modal de autenticação
         function showModal() {
             authModal.classList.remove('hidden');
             authModal.classList.add('flex');
         }
 
-        // Esconde o modal
+        // Esconde o modal de autenticação
         function hideModal() {
             authModal.classList.add('hidden');
             authModal.classList.remove('flex');
         }
 
-        // Atualiza o texto do botão principal de autenticação
+        // Atualiza o texto do botão principal de autenticação com base no estado do usuário
         function updateAuthButton(user) {
             if (user) {
-                // Se o usuário está logado, mostra o e-mail e adiciona um botão de sair
                 authButton.innerHTML = `<span class="hidden md:inline">${user.email || 'Usuário'}</span>`;
-                authButton.classList.remove('bg-blue-600');
+                authButton.classList.remove('bg-mid-pink');
                 authButton.classList.add('bg-green-600');
                 authButton.onclick = () => {
-                    // Substitui a chamada de confirmação para uma mensagem no console, já que a função `confirm` não funciona no iframe
                     console.log('Tentativa de logout. Clique novamente para confirmar.');
                     signOut(auth).catch(error => console.error("Erro ao sair:", error));
                 };
             } else {
-                // Se não está logado, mostra "Entrar" e o botão abre o modal
                 authButton.innerText = 'Entrar';
                 authButton.classList.remove('bg-green-600');
-                authButton.classList.add('bg-blue-600');
+                authButton.classList.add('bg-mid-pink');
                 authButton.onclick = showModal;
             }
         }
@@ -220,13 +278,12 @@
             if (!db || !user) return;
             const userDocRef = doc(db, `artifacts/${appId}/users/${user.uid}/private/user_data`);
             try {
-                // A função setDoc cria ou sobrescreve o documento
                 await setDoc(userDocRef, {
                     uid: user.uid,
                     email: user.email,
                     displayName: user.displayName,
                     createdAt: new Date().toISOString()
-                }, { merge: true }); // 'merge: true' evita sobrescrever outros campos se já existirem
+                }, { merge: true });
             } catch (error) {
                 console.error("Erro ao salvar dados do usuário no Firestore:", error);
             }
@@ -248,7 +305,6 @@
                 hideModal();
             } catch (error) {
                 console.error("Erro de autenticação:", error);
-                // No lugar de `alert`, use uma mensagem no console
                 console.error(`Erro: ${error.message}`);
             }
         };
@@ -257,11 +313,9 @@
         const handleGoogleLogin = async () => {
             const provider = new GoogleAuthProvider();
             try {
-                // Usa signInWithRedirect em vez de signInWithPopup para evitar bloqueios de pop-up
                 await signInWithRedirect(auth, provider);
             } catch (error) {
                 console.error("Erro ao entrar com Google:", error);
-                // No lugar de `alert`, use uma mensagem no console
                 console.error(`Erro ao entrar com Google: ${error.message}`);
             }
         };
@@ -278,7 +332,6 @@
                 // Lida com o resultado do redirecionamento do Google
                 const result = await getRedirectResult(auth);
                 if (result) {
-                    // O usuário foi autenticado, salve os dados dele
                     await saveUserData(result.user);
                     hideModal();
                 }
@@ -290,7 +343,6 @@
 
             } catch (error) {
                 console.error("Erro na inicialização do Firebase:", error);
-                // No lugar de `alert`, use uma mensagem no console
                 console.error("Ocorreu um erro ao inicializar a aplicação. Por favor, tente novamente.");
             }
 
