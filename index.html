@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Loja Online</title>
+    <!-- Inclui a biblioteca do Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+        }
+        /* Estilo para o modal de login */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Cabeçalho da Loja -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Logo da Loja -->
+            <a href="#" class="text-2xl font-bold text-gray-900">Sua Loja</a>
+            <!-- Navegação Principal -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Início</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Produtos</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Sobre Nós</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Contato</a>
+            </nav>
+            <!-- Botões de Ação do Usuário -->
+            <div class="flex items-center space-x-4">
+                <button id="auth-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Entrar
+                </button>
+                <button id="cart-button" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                    Carrinho (0)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal de Login/Cadastro (inicialmente oculto) -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-overlay">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm mx-4 p-8">
+            <h2 class="text-2xl font-bold text-center mb-6">Acesse sua Conta</h2>
+
+            <!-- Opção de login com Google -->
+            <button id="google-login-btn" class="w-full flex items-center justify-center gap-2 bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" class="lucide lucide-chrome"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M21.17 8.98l-4.14 4.14"/><path d="m14.22 17.06-4.14-4.14"/><path d="M8.98 21.17l4.14-4.14"/><path d="m17.06 14.22-4.14 4.14"/></svg>
+                Entrar com Google
+            </button>
+
+            <div class="relative flex items-center py-4">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="flex-shrink mx-4 text-gray-500">ou</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <!-- Formulário de e-mail e senha -->
+            <form id="auth-form" class="space-y-4">
+                <input type="email" id="email-input" placeholder="E-mail" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <input type="password" id="password-input" placeholder="Senha" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <button type="submit" class="w-full bg-gray-800 text-white font-semibold py-3 rounded-lg hover:bg-gray-900 transition-colors">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">
+                    Não tem uma conta?
+                    <button id="toggle-form-btn" class="text-blue-600 font-semibold hover:underline">
+                        Crie uma aqui
+                    </button>
+                </p>
+            </div>
+            
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Seção de Destaque (Hero) -->
+    <section class="bg-blue-600 text-white py-20 px-4 text-center">
+        <div class="container mx-auto">
+            <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">
+                Encontre o que você precisa.
+            </h1>
+            <p class="text-lg sm:text-xl font-light mb-8 max-w-2xl mx-auto">
+                Qualidade, preço justo e entrega rápida. Compre agora e receba no conforto da sua casa.
+            </p>
+            <a href="#" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
+                Comprar Agora
+            </a>
+        </div>
+    </section>
+
+    <!-- Seção de Produtos em Destaque -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-10">Produtos em Destaque</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card do Produto 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+1" alt="Produto 1" class="w-full h-48 object-cover mb-4 rounded-md">
+                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 1</h3>
+                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 199,90</p>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+            <!-- Card do Produto 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+2" alt="Produto 2" class="w-full h-48 object-cover mb-4 rounded-md">
+                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 2</h3>
+                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 99,90</p>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+            <!-- Card do Produto 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
+                <img src="https://placehold.co/400x300/a0aec0/ffffff?text=Produto+3" alt="Produto 3" class="w-full h-48 object-cover mb-4 rounded-md">
+                <h3 class="text-lg font-semibold text-gray-900">Nome do Produto 3</h3>
+                <p class="text-xl font-bold text-gray-700 mt-2 mb-4">R$ 249,90</p>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção "Sobre Nós" -->
+    <section class="bg-gray-200 py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Nossa História</h2>
+            <p class="max-w-3xl mx-auto text-gray-700">
+                Somos apaixonados por [Nicho de Mercado]. Nossa missão é oferecer produtos de alta qualidade, feitos com carinho e atenção aos detalhes. Acreditamos que a satisfação do cliente é o nosso maior sucesso.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-800 text-gray-300 py-10 px-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Sua Loja. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts para Firebase e lógica da loja -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInWithRedirect, getRedirectResult, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase configuration and user authentication.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- Variáveis e elementos do DOM ---
+        const authModal = document.getElementById('auth-modal');
+        const authButton = document.getElementById('auth-button');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const googleLoginBtn = document.getElementById('google-login-btn');
+        const authForm = document.getElementById('auth-form');
+        const toggleFormBtn = document.getElementById('toggle-form-btn');
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+
+        let isLogin = true; // Controla se o formulário é de login ou cadastro
+        let db;
+        let auth;
+        let userId;
+
+        // --- Funções de UI ---
+        // Exibe o modal
+        function showModal() {
+            authModal.classList.remove('hidden');
+            authModal.classList.add('flex');
+        }
+
+        // Esconde o modal
+        function hideModal() {
+            authModal.classList.add('hidden');
+            authModal.classList.remove('flex');
+        }
+
+        // Atualiza o texto do botão principal de autenticação
+        function updateAuthButton(user) {
+            if (user) {
+                // Se o usuário está logado, mostra o e-mail e adiciona um botão de sair
+                authButton.innerHTML = `<span class="hidden md:inline">${user.email || 'Usuário'}</span>`;
+                authButton.classList.remove('bg-blue-600');
+                authButton.classList.add('bg-green-600');
+                authButton.onclick = () => {
+                    // Substitui a chamada de confirmação para uma mensagem no console, já que a função `confirm` não funciona no iframe
+                    console.log('Tentativa de logout. Clique novamente para confirmar.');
+                    signOut(auth).catch(error => console.error("Erro ao sair:", error));
+                };
+            } else {
+                // Se não está logado, mostra "Entrar" e o botão abre o modal
+                authButton.innerText = 'Entrar';
+                authButton.classList.remove('bg-green-600');
+                authButton.classList.add('bg-blue-600');
+                authButton.onclick = showModal;
+            }
+        }
+
+        // --- Funções do Firebase ---
+
+        // Salva os dados do usuário no Firestore
+        const saveUserData = async (user) => {
+            if (!db || !user) return;
+            const userDocRef = doc(db, `artifacts/${appId}/users/${user.uid}/private/user_data`);
+            try {
+                // A função setDoc cria ou sobrescreve o documento
+                await setDoc(userDocRef, {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    createdAt: new Date().toISOString()
+                }, { merge: true }); // 'merge: true' evita sobrescrever outros campos se já existirem
+            } catch (error) {
+                console.error("Erro ao salvar dados do usuário no Firestore:", error);
+            }
+        };
+
+        // Autentica com e-mail e senha
+        const handleEmailAuth = async (event) => {
+            event.preventDefault();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            try {
+                if (isLogin) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    await saveUserData(userCredential.user);
+                }
+                hideModal();
+            } catch (error) {
+                console.error("Erro de autenticação:", error);
+                // No lugar de `alert`, use uma mensagem no console
+                console.error(`Erro: ${error.message}`);
+            }
+        };
+
+        // Autentica com o Google
+        const handleGoogleLogin = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                // Usa signInWithRedirect em vez de signInWithPopup para evitar bloqueios de pop-up
+                await signInWithRedirect(auth, provider);
+            } catch (error) {
+                console.error("Erro ao entrar com Google:", error);
+                // No lugar de `alert`, use uma mensagem no console
+                console.error(`Erro ao entrar com Google: ${error.message}`);
+            }
+        };
+
+        // --- Inicialização e Listeners ---
+
+        window.onload = async () => {
+            // Inicializa o Firebase
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Lida com o resultado do redirecionamento do Google
+                const result = await getRedirectResult(auth);
+                if (result) {
+                    // O usuário foi autenticado, salve os dados dele
+                    await saveUserData(result.user);
+                    hideModal();
+                }
+
+                // Tenta fazer o login automático com o token inicial
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                }
+
+            } catch (error) {
+                console.error("Erro na inicialização do Firebase:", error);
+                // No lugar de `alert`, use uma mensagem no console
+                console.error("Ocorreu um erro ao inicializar a aplicação. Por favor, tente novamente.");
+            }
+
+            // Ouve o estado da autenticação para atualizar a UI
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                }
+                updateAuthButton(user);
+            });
+
+            // Lógica para mostrar/esconder o modal
+            authButton.addEventListener('click', showModal);
+            closeModalBtn.addEventListener('click', hideModal);
+            window.addEventListener('click', (event) => {
+                if (event.target === authModal) {
+                    hideModal();
+                }
+            });
+
+            // Lógica do formulário de autenticação
+            googleLoginBtn.addEventListener('click', handleGoogleLogin);
+            authForm.addEventListener('submit', handleEmailAuth);
+
+            // Lógica para alternar entre Login e Cadastro
+            toggleFormBtn.addEventListener('click', () => {
+                isLogin = !isLogin;
+                const submitBtn = authForm.querySelector('button[type="submit"]');
+                if (isLogin) {
+                    submitBtn.innerText = 'Entrar';
+                    toggleFormBtn.innerText = 'Crie uma aqui';
+                } else {
+                    submitBtn.innerText = 'Criar Conta';
+                    toggleFormBtn.innerText = 'Já tem uma conta?';
+                }
+            });
+        };
+    </script>
+</body>
+</html>
